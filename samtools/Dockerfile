@@ -7,17 +7,19 @@ RUN apt update --fix-missing \
 
 RUN \
   wget http://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 \
-  && tar -xjvf samtools-1.3.1.tar.bz2 \
-  && cd samtools-1.3.1 \
+  && tar -xjvf samtools-1.3.1.tar.bz2 -C /opt \
+  && mv /opt/samtools-1.3.1 samtools \
+  && cd /opt/samtools \
   && ./configure \
   && make \
-  && mkdir /opt/samtools/ \
-  && mv samtools /opt/samtools/ \
-  && cd .. \
-  && rm -rf samtools-1.3.1 samtools-1.3.1.tar.bz2
+  && cd htslib/ \
+  && ./configure \
+  && make \
+  && cd / \
+  && rm -rf samtools-1.3.1.tar.bz2
   
 RUN apt-get remove -q -y zlib1g-dev libncurses5-dev wget g++ gcc make bzip2 \
     && apt-get autoremove -y
 
-ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/
+ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc
 
