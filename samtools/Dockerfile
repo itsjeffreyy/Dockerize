@@ -8,8 +8,9 @@ RUN apt update --fix-missing \
 RUN \
   wget http://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 \
   && tar -xjvf samtools-1.3.1.tar.bz2 -C /opt \
-  && mv /opt/samtools-1.3.1 samtools \
-  && cd /opt/samtools \
+  && cd /opt/
+  && mv samtools-1.3.1 samtools \
+  && cd samtools \
   && ./configure \
   && make \
   && cd htslib/ \
