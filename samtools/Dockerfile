@@ -16,7 +16,7 @@ RUN \
   && cd htslib-1.3.1/ \
   && ./configure \
   && make \
-  && rm -rf samtools-1.3.1.tar.bz2
+  && rm -rf /samtools-1.3.1.tar.bz2
   
 RUN apt-get remove -q -y zlib1g-dev libncurses5-dev wget g++ gcc make bzip2 \
     && apt-get autoremove -y
