@@ -22,7 +22,7 @@ RUN \
   && make sambamba-ldmd2-64 
 
 
-RUN apt remove -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev
-    && apt autoremove -y \
+RUN apt remove -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev \
+    && apt autoremove -y 
 
 ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/sambamba/build/sambamba
