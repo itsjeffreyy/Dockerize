@@ -10,7 +10,7 @@ RUN \
 
 RUN \
   wget https://github.com/ldc-developers/ldc/releases/download/v0.17.1/ldc2-0.17.1-linux-x86_64.tar.xz \
-  && tar xJf ~/source/ldc2-0.17.1-linux-x86_64.tar.xz
+  && tar xJf ldc2-0.17.1-linux-x86_64.tar.xz
 
 ENV PATH=/opt/ldc2-0.17.1-linux-x86_64/bin/:$PATH
 ENV LIBRARY_PATH=/opt/ldc2-0.17.1-linux-x86_64/lib/
