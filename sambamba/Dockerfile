@@ -2,24 +2,27 @@ FROM ubuntu
 
 MAINTAINER Jeffreyy Chun-Hui Yu
 
-RUN apt update --fix-missing \
-    && apt install -q -y wget g++ gcc make bzip2 libncurses5-dev zlib1g-dev
+WORKDIR /opt
 
 RUN \
-  wget http://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 \
-  && tar -xjvf samtools-1.3.1.tar.bz2 -C /opt \
-  && cd /opt/ \
-  && mv samtools-1.3.1 samtools \
-  && cd samtools \
-  && ./configure \
-  && make \
-  && cd htslib-1.3.1/ \
-  && ./configure \
-  && make \
-  && rm -rf /samtools-1.3.1.tar.bz2
-  
-RUN apt-get remove -q -y zlib1g-dev libncurses5-dev wget g++ gcc make bzip2 \
-    && apt-get autoremove -y
+  apt update --fix-missing \
+  && apt install -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev
 
-ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc
+RUN \
+  wget https://github.com/ldc-developers/ldc/releases/download/v0.17.1/ldc2-0.17.1-linux-x86_64.tar.xz
+  && tar xJf ~/source/ldc2-0.17.1-linux-x86_64.tar.xz
 
+ENV PATH=/opt/ldc2-0.17.1-linux-x86_64/bin/:$PATH
+ENV LIBRARY_PATH=/opt/ldc2-0.17.1-linux-x86_64/lib/
+
+
+RUN \
+  git clone --recursive https://github.com/lomereiter/sambamba.git
+  && cd sambamba
+  && make sambamba-ldmd2-64
+
+
+RUN apt remove -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev
+    && apt autoremove -y
+
+ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/sambamba/build/sambamba
