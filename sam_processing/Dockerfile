@@ -8,6 +8,20 @@ RUN \
   apt update --fix-missing \
   && apt install -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev python
 
+# samtools part
+RUN \
+  wget http://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 \
+  && tar -xjvf samtools-1.3.1.tar.bz2 -C /opt \
+  && cd /opt/ \
+  && mv samtools-1.3.1 samtools \
+  && cd samtools \
+  && ./configure \
+  && make \
+  && cd htslib-1.3.1/ \
+  && ./configure \
+  && make 
+
+# sambamba part
 RUN \
   wget https://github.com/ldc-developers/ldc/releases/download/v0.17.1/ldc2-0.17.1-linux-x86_64.tar.xz \
   && tar xJf ldc2-0.17.1-linux-x86_64.tar.xz
@@ -20,12 +34,14 @@ RUN \
   && cd /opt/sambamba \
   && make sambamba-ldmd2-64 
 
+# clean tar balls
 RUN \
-  rm /opt/ldc2-0.17.1-linux-x86_64.tar.xz
+  rm -f /opt/samtools-1.3.1.tar.bz2 \
+  rm -f /opt/ldc2-0.17.1-linux-x86_64.tar.xz
+  
+RUN \
+  apt-get autoremove -y
 
-#RUN apt remove -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev  perl curl git wget unzip tabix libncurses5-dev \
-#  && apt autoremove -y 
-RUN  apt autoremove -y
-
-ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/sambamba/build/sambamba:$PATH
+# set evironment pathway
+ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc:/opt/sambamba/build/sambamba:$PATH
 
