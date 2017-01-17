@@ -1,5 +1,7 @@
-FROM ubuntu
+# Base image to ubuntu:16.04
+FROM ubuntu:16.04
 
+# Author 
 MAINTAINER Jeffreyy Chun-Hui Yu
 
 WORKDIR /opt
