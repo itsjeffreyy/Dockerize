@@ -10,6 +10,7 @@ RUN \
 
 WORKDIR /opt 
 
+# GATK installation
 RUN mkdir GATK
 
 COPY GenomeAnalysisTK-3.7.tar.bz2 gatk.tar.bz2
@@ -19,14 +20,12 @@ RUN \
 
 # clean tar balls
 RUN \
-	rm -f /opt/gatk.tar.bz2
-  
-RUN \
 	apt-get autoremove -y \
+	&& rm -f /opt/gatk.tar.bz2 \
 	&& rm -rf /var/lib/apt
 
 # set evironment pathway
-ENV PATH /bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:$PATH
+ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:$PATH
 
 ENTRYPOINT ["java", "-jar", "/opt/GATK/GenomeAnalysisTK.jar"]
 
