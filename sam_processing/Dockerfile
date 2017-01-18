@@ -45,5 +45,5 @@ RUN \
 	&& rm -rf /var/lib/apt 
 
 # set evironment pathway
-ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc:/opt/sambamba/build/sambamba:$PATH
+ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc:/opt/sambamba/build/:$PATH
 
