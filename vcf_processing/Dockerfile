@@ -11,12 +11,20 @@ RUN \
 
 WORKDIR /opt
 
+# install vt and vcflib
+# install vt
+RUN \
+	git clone --recursive https://github.com/atks/vt.git \
+	&& cd vt \
+	&& make 
+
 # install vcflib
 RUN \
 	git clone --recursive https://github.com/vcflib/vcflib.git \
 	&& cd vcflib \
 	&& make 
 
+ENV PATH=/opt/vt:$PATH
 ENV PATH=/opt/vcflib:$PATH
 
 #clean tar balls
