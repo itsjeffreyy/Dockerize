@@ -42,8 +42,10 @@ RUN \
 	rm -f /opt/samtools-1.3.1.tar.bz2 \
 	&& rm -f /opt/ldc2-0.17.1-linux-x86_64.tar.xz \
 	&& apt-get autoremove -y \
-	&& rm -rf /var/lib/apt 
+	&& rm -rf /var/lib/apt/lists/*
 
 # set evironment pathway
 ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc:/opt/sambamba/build/:$PATH
 
+# set work path
+WORKDIR /root
