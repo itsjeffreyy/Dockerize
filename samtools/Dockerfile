@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+ROM ubuntu:16.04
 
 MAINTAINER Jeffreyy Chun-Hui Yu
 
@@ -28,3 +28,4 @@ RUN apt-get remove -q -y zlib1g-dev libncurses5-dev wget g++ gcc make bzip2 \
 # set environment
 ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/samtools/:/opt/samtools/misc
 
+WORKDIR /root/

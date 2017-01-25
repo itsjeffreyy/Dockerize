@@ -29,3 +29,4 @@ ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:$PATH
 
 #ENTRYPOINT ["java", "-jar", "/opt/GATK/GenomeAnalysisTK.jar"]
 
+WORKDIR /root

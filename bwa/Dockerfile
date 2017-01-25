@@ -25,3 +25,6 @@ RUN \
 
 # set environment
 ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/bwa:/opt/bwa/bwakit:$PATH
+
+WORKDIR /root
+
