@@ -17,7 +17,7 @@ RUN \
 	&& cd vcflib \
 	&& make 
 
-ENV PATH=/opt/vcflib:$PATH
+ENV PATH=/opt/vcflib/bin:$PATH
 
 #clean tar balls
 RUN \

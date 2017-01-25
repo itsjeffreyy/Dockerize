@@ -7,7 +7,7 @@ MAINTAINER Jeffreyy Chun-Hui Yu
 # install the system requirement
 RUN \
 	apt-get update --fix-missing -yq \
-	&& apt-get install -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev curl git wget unzip tabix libncurses5-dev
+	&& apt-get install -q -y wget g++ gcc make bzip2 git autoconf automake make g++ gcc build-essential zlib1g-dev libgsl0-dev curl git wget unzip tabix libncurses5-dev 
 
 WORKDIR /opt
 
@@ -24,8 +24,7 @@ RUN \
 	&& cd vcflib \
 	&& make 
 
-ENV PATH=/opt/vt:$PATH
-ENV PATH=/opt/vcflib:$PATH
+ENV PATH=/opt/vt:/opt/vcflib/bin:$PATH
 
 #clean tar balls
 RUN \
