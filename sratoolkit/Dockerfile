@@ -10,15 +10,15 @@ WORKDIR /opt
 
 # sratoolkit installation
 RUN \
-	wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.1/sratoolkit.2.8.1-ubuntu64.tar.gz -O- \
-    | tar zxf -C /opt/ \
+	wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.1/sratoolkit.2.8.1-ubuntu64.tar.gz -O sratoolkit.2.8.1.tar.gz \
+    && tar zxf sratoolkit2.8.1.tar.gz  \
     && mkdir /opt/sratoolkit \
-    && ln -s /opt/sratoolkit.2.8.1-ubuntu64/bin/* /opt/sratoolkit/
+    && ln -s /opt/sratoolkit.2.8.1/bin/* /opt/sratoolkit/
 
 # reduce image size
 RUN \
 	apt-get autoremove -y \
-	&& rm -f /opt/sratoolkit.2.8.1-ubuntu64.tar.gz \
+	&& rm -f /opt/sratoolkit.2.8.1.tar.gz \
 	&& rm -rf /var/lib/apt
 
 # set environment
