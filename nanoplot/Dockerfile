@@ -6,7 +6,7 @@ ARG NANOPLOT_VERSION=1.29.0
 
 WORKDIR /input
 
-#Preqrequisites
+#Prerequisites
 RUN apt-get update && apt-get install -y make \
                                          gcc \
 					 libbz2-dev \
