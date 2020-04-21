@@ -2,26 +2,31 @@ FROM ubuntu:16.04
 
 MAINTAINER Jeffreyy Chun-Hui Yu
 
+ARG SRATOOLKIT_VER=2.10.4
+LABEL \
+software="SRAToolKit" \
+software.version="2.10.4"
+
+WORKDIR /opt
+
 # install the system requirement
 RUN apt-get update --fix-missing \
-	&& apt-get install -q -y wget
-
-WORKDIR /opt 
-
+	&& apt-get autoremove -y \
+	&& apt-get purge \
+	&& apt-get install -y wget \
 # sratoolkit installation
-RUN \
-	wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.8.1/sratoolkit.2.8.1-ubuntu64.tar.gz -O sratoolkit.2.8.1.tar.gz \
-    && tar zxf sratoolkit.2.8.1.tar.gz  \
-    && mkdir /opt/sratoolkit \
-    && ln -s /opt/sratoolkit.2.8.1-ubuntu64/bin/* /opt/sratoolkit/
-
+	&& wget -q https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/${SRATOOLKIT_VER}/sratoolkit.${SRATOOLKIT_VER}-ubuntu64.tar.gz -O sratoolkit.${SRATOOLKIT_VER}.tar.gz \
+    && tar zxvf sratoolkit.${SRATOOLKIT_VER}.tar.gz  \
+	&& mv sratoolkit.${SRATOOLKIT_VER}-ubuntu64 sratoolkit.${SRATOOLKIT_VER} \
 # reduce image size
-RUN \
-	apt-get autoremove -y \
-	&& rm -f /opt/sratoolkit.2.8.1.tar.gz \
-	&& rm -rf /var/lib/apt
+	&& rm -f sratoolkit.${SRATOOLKIT_VER}.tar.gz \
+	&& rm -rf /var/lib/apt 
 
-# set environment
-ENV PATH=/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/sratoolkit/
+COPY user-settings.mkfg /root/.ncbi/
 
-WORKDIR /root/
+# set environment  
+ENV PATH=/opt/sratoolkit.${SRATOOLKIT_VER}/bin/:$PATH
+
+RUN vdb-config --cfg-dir /root/.ncbi/
+
+WORKDIR /output
