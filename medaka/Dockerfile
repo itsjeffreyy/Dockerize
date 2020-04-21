@@ -27,10 +27,11 @@ RUN apt-get update \
 	&& mkdir /output \
 	# install medaka
 	&& git clone https://github.com/nanoporetech/medaka.git \ 
-	&& cd medaka &&	sed -i 's/tensorflow/tensorflow-gpu/' requirements.txt && make install
+	&& cd medaka &&	sed -i 's/tensorflow/tensorflow-gpu/' requirements.txt && make install \
+	&& echo "source /program/medaka/venv/bin/activate" >> ~/.bashrc
 
-ENV export TF_FORCE_GPU_ALLOW_GROWTH=true
-ENV source /program/medaka/venv/bin/activate
+ENV PATH=/program/medaka/venv/bin:$PATH
+ENV TF_FORCE_GPU_ALLOW_GROWTH=true
 
 # define a working dir
 WORKDIR /input
