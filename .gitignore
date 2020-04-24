@@ -4,4 +4,6 @@ picard
 runscript
 ubuntu
 */Dockfile-*
+./*/\.*.swp
+./\.*.swp
 
