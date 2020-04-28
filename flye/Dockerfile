@@ -1,0 +1,27 @@
+# base image
+FROM python:3.7-slim
+
+MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
+
+ARG FLYE_VER="v2.7.1"
+
+LABEL \
+	base_image="python:3.7-slim" \
+	software="Flye" \
+	software_version="v2.7.1"
+
+WORKDIR /opt
+
+# environment setting
+RUN apt-get update && apt-get upgrade -y \
+	&& apt-get autoremove -y && apt-get purge \
+	&& apt-get install -q -y g++ gcc make bzip2 ncurses-base libncurses5-dev zlib1g-dev git curl make libbz2-dev liblzma-dev autoconf libcurl4-gnutls-dev libssl-dev \
+# install flye from source
+	&& python3 -m pip install  setuptools \
+	&& git clone https://github.com/fenderglass/Flye \
+	&& cd Flye \
+	&& python3 setup.py install \
+# setting
+	&& mkdir /input /output
+
+WORKDIR /input
