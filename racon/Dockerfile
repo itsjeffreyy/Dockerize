@@ -12,7 +12,7 @@ LABEL \
 	software_version="v1.4.15"
 
 WORKDIR /opt
-# eviroment setting
+# evironment setting
 RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install -y wget git gcc g++ cmake git openssl libssh-dev curl \
 # install cmake
