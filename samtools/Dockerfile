@@ -23,10 +23,6 @@ RUN apt-get update --fix-missing && apt-get upgrade -y \
 	&& mkdir /output /input \
 # reduce image size
 	&& rm -rf /opt/*.tar.bz2 \
-	&& rm -rf /opt/* \
 	&& apt-get autoremove -y 
-
-# set environment
-#ENV PATH=/opt/samtools-1.9/:/opt/samtools-1.9/misc:$PATH
 
 WORKDIR /input
