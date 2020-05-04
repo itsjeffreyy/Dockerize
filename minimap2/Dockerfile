@@ -11,7 +11,7 @@ LABEL \
 	softeare_version=$MINIMAP2_VER
 
 # set workdir
-WORKDIR /apt
+WORKDIR /opt
 
 # requirment
 RUN apt-get update && apt-get upgrade -y \
@@ -28,9 +28,8 @@ RUN apt-get update && apt-get upgrade -y \
 	&& tar zxvf v2.17.tar.gz \
 	&& cd minimap2-2.17/ \
 	&& make -j 2 \
-	&& ln -s /program/minimap2-2.17/minimap2.1 ~/minimap2 \
 # reduce image size
-	&& rm -f /opt/v2.17.tar.gz /opt/*.tar.bz2 \
+	&& rm -f /opt/*.tar.* \
 	&& apt-get autoremove -y 
 
 ENV PATH=/opt/minimap2-2.17/:$PATH
