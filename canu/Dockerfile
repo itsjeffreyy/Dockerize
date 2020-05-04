@@ -13,7 +13,7 @@ LABEL \
 WORKDIR /opt
 
 RUN apt-get update && apt-get upgrade -y \
-	&& apt-get install -y git wget make g++ \
+	&& apt-get install -y git wget make g++ openjdk-8-jdk openjdk-8-jre \
 	&&  wget https://github.com/marbl/canu/archive/${CANU_VER}.tar.gz \
 	&& tar zxvf ${CANU_VER}.tar.gz && cd canu*/src \
 	&& make -j 2 \
