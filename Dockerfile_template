@@ -1,0 +1,33 @@
+# arg
+ARG BASE_IMAGE=""
+ARG SOFTWARE=""
+ARG SOFTWARE_VER=""
+
+# base image
+FROM ${BASE_IMAGE}
+
+# maintainer
+MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
+
+# LABEL
+LABEL \
+	maintainer="Jeffrey C.H. Yu" \
+	email="itsjeffreyy76@gmail.com" \
+	base_image=${BASE_IMAGE} \
+	software=${SOFTWARE} \
+	software_version=${SOFTWARE_VER} 
+
+WORKDIR \opt
+
+# initiat setting
+RUN apt-get update && apt-get upgrade -y \
+# environment setting
+	&& apt-get install -y wget git \
+# Install software
+
+# reduce size
+	&& apt-get autoremove -y && apt-get purge -y \
+# setting
+	&& mkdir /input /output
+
+WORKDIR /input
