@@ -22,12 +22,17 @@ WORKDIR \opt
 # initiat setting
 RUN apt-get update && apt-get upgrade -y \
 # environment setting
-	&& apt-get install -y wget git gcc g++ make zlib1g zlib1g-dev bzip2 libbz2-dev liblzma-dev \
-# Install software
-	&& git clone https://github.com/lh3/seqtk.git \
+	&& apt-get install -y wget git gcc g++ make zlib1g zlib1g-dev \
+# Install software via git
+#	&& git clone https://github.com/lh3/seqtk.git \
+#	&& cd seqtk && make && make install \
+# Install software via wget 
+	&& wget https://github.com/lh3/seqtk/archive/v1.3.tar.gz \
+	&& tar zxvf v1.3.tar.gz && mv -f seqtk-1.3 seqtk \
 	&& cd seqtk && make && make install \
 # reduce size
 	&& apt-get autoremove -y && apt-get purge -y \
+	&& rm -f /opt/*.tar.gz \
 # setting
 	&& mkdir /input /output
 
