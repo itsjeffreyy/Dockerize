@@ -17,6 +17,7 @@ LABEL \
 	software=${SOFTWARE} \
 	software_version=${SOFTWARE_VER} 
 
+COPY gms2/ /opt
 WORKDIR \opt
 
 # initiat setting
@@ -25,9 +26,8 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install -y wget \
 # Install software
 # GeneMarkS2
-    && wget http://topaz.gatech.edu/GeneMark/tmp/GMtool_eWtih/gms2_linux_64.tar.gz \
-    && wget http://topaz.gatech.edu/GeneMark/tmp/GMtool_eWtih/gm_key_64.gz \
-    && tar zxvf gms2_linux_64.tar.gz && gzip -d gm_key_64.gz \
+    && tar zxvf gms2_linux_64.tar.gz \
+	#&& gzip -d gm_key_64.gz \
     && cp gms2_linux_64/gmhmmp2_key $HOME/.gmhmmp2_key \
 # DFAST
 	&& conda update --all \
