@@ -50,6 +50,7 @@ RUN mkdir VADR && cd VADR \
 	&& cd /opt && tar zxvf vadr-models-corona-1.1-1.tar.gz \
 # reduce size
 	&& apt-get autoremove -y && apt-get purge -y \
+	&& rm /opt/*.tar.gz \
 # setting
 	&& mkdir /input /output 
 ENV VADRINSTALLDIR="/opt/VADR/"
