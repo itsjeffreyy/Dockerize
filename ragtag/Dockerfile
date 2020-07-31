@@ -23,23 +23,22 @@ WORKDIR \opt
 RUN apt-get update && apt-get upgrade -y \
 # environment setting
 	&& apt-get install -y git wget zlib1g man-db wget g++ gcc make bzip2 libncurses5-dev zlib1g-dev git curl make libbz2-dev liblzma-dev autoconf libcurl4-gnutls-dev libssl-dev \
+	&& python3 -m pip install --upgrade pip \
 	&& python3 -m pip install numpy intervaltree pysam \
 # Install software
 # install samtools
-	&& curl -LOOO https://github.com/samtools/{samtools/releases/download/1.9/samtools-1.9,bcftools/releases/download/1.9/bcftools-1.9,htslib/releases/download/1.9/htslib-1.9}.tar.bz2 \
+	&& curl -LOOO https://github.com/samtools/{samtools/releases/download/1.10/samtools-1.10,bcftools/releases/download/1.10.2/bcftools-1.10.2,htslib/releases/download/1.10.2/htslib-1.10.2}.tar.bz2 \
 	&& cat *tar.bz2 | tar -ijxf - \
-	&& cd htslib-1.9 && ./configure && make && make install && cd .. \
-	&& cd samtools-1.9 && ./configure  && make && make install && cd .. \
-	&& cd bcftools-1.9 && ./configure  && make && make install && cd .. \
+	&& cd htslib-1.10.2 && ./configure && make && make install && cd .. \
+	&& cd samtools-1.10 && ./configure  && make && make install && cd .. \
+	&& cd bcftools-1.10.2 && ./configure  && make && make install && cd .. \
 # install minimap2
 	&& wget https://github.com/lh3/minimap2/archive/v2.17.tar.gz \
 	&& tar zxvf v2.17.tar.gz \
 	&& cd minimap2-2.17/ \
 	&& make -j 2 \
 # install ragtag
-	&& cd /opt \
-	&& git clone https://github.com/malonge/RagTag.git \
-	&& cd RagTag && python3 setup.py install \
+	&& python3 -m pip install RagTag \
 # reduce size
 	&& apt-get autoremove -y && apt-get purge -y \
 	&& rm -f /opt/*.tar.* \
