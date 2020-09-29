@@ -1,25 +1,35 @@
-# base image
-FROM ubuntu:16.04
+# arg
+ARG BASE_IMAGE="continuumio/miniconda3"
+ARG SOFTWARE="Canu"
+ARG SOFTWARE_VER="v2.0"
 
+# base image
+FROM ${BASE_IMAGE}
+
+# maintainer
 MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
 
-ARG CANU_VER="v2.0"
-
+# LABEL
 LABEL \
-	base_image="ubuntu:16.04" \
-	software="Canu" \
-	software_version=${CANU_VER}
+	maintainer="Jeffrey C.H. Yu" \
+	email="itsjeffreyy76@gmail.com" \
+	base_image=${BASE_IMAGE} \
+	software=${SOFTWARE} \
+	software_version=${SOFTWARE_VER} 
 
-WORKDIR /opt
+WORKDIR \opt
 
+# initiat setting
 RUN apt-get update && apt-get upgrade -y \
-	&& apt-get install -y git wget make g++ openjdk-8-jdk openjdk-8-jre \
-	&&  wget https://github.com/marbl/canu/archive/${CANU_VER}.tar.gz \
-	&& tar zxvf ${CANU_VER}.tar.gz && cd canu*/src \
-	&& make -j 2 \
-	&& mkdir /input /output \
-	&& apt-get autoremove -y && apt-get purge 
-
-ENV PATH=/opt/canu-2.0/Linux-amd64/bin:$PATH
+# environment setting
+	&& apt-get install -y wget git \
+	&& conda update conda \
+	&& conda update --update-all \
+# Install software
+	&& conda install -c conda-forge -c bioconda -c defaults canu \
+# reduce size
+	&& apt-get autoremove -y && apt-get purge -y \
+# setting
+	&& mkdir /input /output
 
 WORKDIR /input
