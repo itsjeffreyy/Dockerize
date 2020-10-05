@@ -1,26 +1,34 @@
-# base image
-FROM python:3.7-slim
+# arg
+ARG BASE_IMAGE="continuumio/miniconda3"
+ARG SOFTWARE="Flye"
+ARG SOFTWARE_VER="v2.8.1"
 
+# base image
+FROM ${BASE_IMAGE}
+
+# maintainer
 MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
 
-ARG FLYE_VER="v2.7.1"
-
+# LABEL
 LABEL \
-	base_image="python:3.7-slim" \
-	software="Flye" \
-	software_version="v2.7.1"
+	maintainer="Jeffrey C.H. Yu" \
+	email="itsjeffreyy76@gmail.com" \
+	base_image=${BASE_IMAGE} \
+	software=${SOFTWARE} \
+	software_version=${SOFTWARE_VER} 
 
 WORKDIR /opt
 
-# environment setting
+# initiat setting
 RUN apt-get update && apt-get upgrade -y \
-	&& apt-get autoremove -y && apt-get purge \
-	&& apt-get install -q -y g++ gcc make bzip2 ncurses-base libncurses5-dev zlib1g-dev git curl make libbz2-dev liblzma-dev autoconf libcurl4-gnutls-dev libssl-dev \
-# install flye from source
-	&& python3 -m pip install  setuptools \
-	&& git clone https://github.com/fenderglass/Flye \
-	&& cd Flye \
-	&& python3 setup.py install \
+# environment setting
+	&& apt-get install -y procps \
+	&& conda config --add channels bioconda \
+	&& conda update --all -y \
+# Install software
+	&& conda install -c bioconda flye=${software_version} \
+# reduce size
+	&& apt-get autoremove -y \
 # setting
 	&& mkdir /input /output
 
