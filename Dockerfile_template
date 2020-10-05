@@ -17,7 +17,7 @@ LABEL \
 	software=${SOFTWARE} \
 	software_version=${SOFTWARE_VER} 
 
-WORKDIR \opt
+WORKDIR /opt
 
 # initiat setting
 RUN apt-get update && apt-get upgrade -y \
