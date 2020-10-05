@@ -1,5 +1,5 @@
 # arg
-ARG BASE_IMAGE="python"
+ARG BASE_IMAGE="continuumio/miniconda3"
 ARG SOFTWARE="NanoPlot"
 ARG SOFTWARE_VER="v1.29.0"
 
@@ -22,9 +22,10 @@ WORKDIR \opt
 # initiat setting
 RUN apt-get update && apt-get upgrade -y \
 # environment setting
-	&& apt-get install -y procps \
+	&& apt install -y procps \
 # Install software
-	&& python3 -m pip install NanoPlot \
+	&& conda update --all \
+	&& conda install -y -c bioconda nanoplot \
 # reduce size
 	&& apt-get autoremove -y && apt-get purge -y \
 # setting
