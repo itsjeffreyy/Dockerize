@@ -25,8 +25,8 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get install -y wget git perl gcc g++ cmake automake make openssl perl-openssl-defaults libssl-dev zlib1g zlib1g-dev curl unzip libmodule-cpanfile-perl cpanminus build-essential python3 libpython3-all-dev libpython3-dev libpython3-stdlib \
 	&& perl -MCPAN -e shell \
 	&& perl -MCPAN -e install CPAN \
-	&& cpan reload cpan 
-RUN cpan install Term::ReadLine \
+	&& cpan reload cpan \
+	&& cpan install Term::ReadLine \
 	&& cpan install YAML \
 	&& cpan install File::ShareDir::Install \
 	&& cpan install File::Listing \
