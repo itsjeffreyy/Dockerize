@@ -9,12 +9,12 @@ ARG CMAKE_VER="3.17.1"
 LABEL \
 	base_image="nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04" \
 	software="racon" \
-	software_version="v1.4.15"
+	software_version="v1.4.19"
 
 WORKDIR /opt
 # evironment setting
 RUN apt-get update && apt-get upgrade -y \
-	&& apt-get install -y wget git gcc g++ cmake git openssl libssh-dev curl \
+	&& apt-get install -y wget git gcc g++ cmake git openssl libssh-dev curl procps \
 # install cmake
     && wget -q https://github.com/Kitware/CMake/releases/download/v3.17.1/cmake-3.17.1.tar.gz \
     && tar zxvf cmake-3.17.1.tar.gz && cd cmake-3.17.1 \
@@ -28,7 +28,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& cmake -Dracon_build_tests=ON -Dracon_build_wrapper=ON -DCMAKE_BUILD_TYPE=Release -Dracon_enable_cuda=ON .. \
 	&& make -j 2 && make install \
 # purge
-	&& rm -fr /opt/racon /opt/cmake-3.17.1* \
+	&& rm -fr /opt/*.tar.gz \
 	&& apt-get autoremove -y \
 	&& apt-get purge \
 # setting

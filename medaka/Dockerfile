@@ -13,18 +13,18 @@ MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
 LABEL \
 	maintainer="Jeffrey C.H. Yu" \
 	email="itsjeffreyy76@gmail.com" \
-	base_image=$BASE_IMAGE \
-	software=$SOFTWARE \
-	software_version=$SOFTWARE_VER 
+	base_image=${BASE_IMAGE} \
+	software=${SOFTWARE} \
+	software_version=${SOFTWARE_VER}
 
-WORKDIR \opt
+WORKDIR /opt
 
 # initiat setting
 RUN apt-get update && apt-get upgrade -y \
 # environment setting
 	&& apt-get install -y git apt-utils \
-	bzip2 g++ zlib1g-dev libbz2-dev liblzma-dev libffi-dev libncurses5-dev libcurl4-gnutls-dev libssl-dev curl make cmake wget python3-all-dev python-virtualenv python3 python3-pip gcc liblzma-dev autoconf \
-	&& python3 -m pip install --upgrade pip \
+	bzip2 g++ zlib1g-dev libbz2-dev liblzma-dev libffi-dev libncurses5-dev libcurl4-gnutls-dev libssl-dev curl make cmake wget python3-all-dev python-virtualenv python3 python3-pip gcc liblzma-dev autoconf procps \
+	&& python3 -m pip install --upgrade pip setuptools six \
 # Install software
 	## samtools
 	&& curl -LOOO https://github.com/samtools/{samtools/releases/download/1.10/samtools-1.10,bcftools/releases/download/1.10.2/bcftools-1.10.2,htslib/releases/download/1.10.2/htslib-1.10.2}.tar.bz2 \
