@@ -1,7 +1,7 @@
 # arg
-ARG BASE_IMAGE="ubuntu:16.04"
-ARG SOFTWARE="SAMTools, bcftools, htslib"
-ARG SOFTWARE_VER="v1.10"
+ARG BASE_IMAGE="ubuntu:18.04"
+ARG SOFTWARE="samtools, bcftools, htslib"
+ARG SOFTWARE_VER="1.11"
 
 # base image
 FROM ${BASE_IMAGE}
@@ -24,11 +24,11 @@ RUN apt-get update && apt-get upgrade -y \
 # environment setting
 	&& apt-get install -q -y wget g++ gcc make bzip2 libncurses5-dev zlib1g-dev git curl make libbz2-dev liblzma-dev autoconf automake perl libcurl4-gnutls-dev libssl-dev \
 # Install software
-	&& curl -LOOO https://github.com/samtools/{samtools/releases/download/1.10/samtools-1.10,bcftools/releases/download/1.10.2/bcftools-1.10.2,htslib/releases/download/1.10.2/htslib-1.10.2}.tar.bz2 \
+	&& curl -LOOO https://github.com/samtools/{samtools/releases/download/1.11/samtools-1.11,bcftools/releases/download/1.11/bcftools-1.11,htslib/releases/download/1.11/htslib-1.11}.tar.bz2 \
 	&& cat *tar.bz2 | tar -ijxf - \
-	&& cd htslib-1.10.2 && ./configure && make && make install && cd .. \
-	&& cd samtools-1.10 && ./configure  && make && make install && cd .. \
-	&& cd bcftools-1.10.2 && ./configure  && make && make install && cd .. \
+	&& cd htslib-1.11 && ./configure && make && make install && cd .. \
+	&& cd samtools-1.11 && ./configure  && make && make install && cd .. \
+	&& cd bcftools-1.11 && ./configure  && make && make install && cd .. \
 # reduce size
 	&& apt-get autoremove -y && apt-get purge -y \
 	&& rm -rf /opt/*.tar.bz2 \
