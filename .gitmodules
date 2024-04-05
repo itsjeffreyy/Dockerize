@@ -1,0 +1,3 @@
+[submodule "Clair3_minimap2/Clair3"]
+	path = Clair3_minimap2/Clair3
+	url = https://github.com/HKU-BAL/Clair3
