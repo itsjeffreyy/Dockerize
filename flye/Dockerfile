@@ -1,35 +1,28 @@
-# arg
 ARG BASE_IMAGE="continuumio/miniconda3"
 ARG SOFTWARE="Flye"
-ARG SOFTWARE_VER="v2.8.1"
+ARG SOFTWARE_VER="2.9.6"
 
-# base image
 FROM ${BASE_IMAGE}
 
-# maintainer
-MAINTAINER Jeffrey C.H. Yu <itsjeffreyy76@gmail.com>
+# FROM 之後必須重新宣告，後面才讀得到
+ARG SOFTWARE
+ARG SOFTWARE_VER
 
-# LABEL
 LABEL \
-	maintainer="Jeffrey C.H. Yu" \
-	email="itsjeffreyy76@gmail.com" \
-	base_image=${BASE_IMAGE} \
-	software=${SOFTWARE} \
-	software_version=${SOFTWARE_VER} 
+    maintainer="Jeffrey C.H. Yu" \
+    email="itsjeffreyy76@gmail.com" \
+    software=${SOFTWARE} \
+    software_version=${SOFTWARE_VER}
 
 WORKDIR /opt
 
-# initiat setting
-RUN apt-get update && apt-get upgrade -y \
-# environment setting
-	&& apt-get install -y procps \
-	&& conda config --add channels bioconda \
-	&& conda update --all -y \
-# Install software
-	&& conda install -c bioconda flye=${software_version} \
-# reduce size
-	&& apt-get autoremove -y \
-# setting
-	&& mkdir /input /output
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends procps \
+    && conda create -y -n flye -c conda-forge -c bioconda flye=${SOFTWARE_VER} \
+    && conda clean -a -y \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /input /output
+
+ENV PATH=/opt/conda/envs/flye/bin:$PATH
 
 WORKDIR /input
